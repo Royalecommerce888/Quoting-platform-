@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; }
+    .box {
+      max-width: 500px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin: 0 auto;
+    }
+    h1 { margin-top: 0; }
+    code { background: #f5f5f5; padding: 3px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Quote Demo</h1>
+    
+    <p><strong>Base Carrier Rate:</strong> $<%= baseRate %></p>
+
+    <p><strong>Markup Chain (from DB):</strong>
+      <code><%= JSON.stringify(markups) %></code>
+    </p>
+
+    <p><strong>Final Price Shown to Customer:</strong> 
+      <span style="font-size: 1.4em;">$<%= finalRate %></span>
+    </p>
+
+    <small>Change percentages in your database and refresh this page to see dynamic pricing.</small>
+  </div>
+</body>
+</html>
