@@ -36,9 +36,10 @@ app.get("/db-test", async (req, res) => {
   }
 });
 
-// TODO: put your real C_ID from the database here:
+// Customer C's ID (from your partners table)
 const C_ID = "d39d29b5-861b-4b03-be8b-3da6ea6ed543";
 
+// Quote demo route (renders HTML)
 app.get("/quote-demo", async (req, res) => {
   const baseRate = 100; // pretend carrier base cost is $100
 
@@ -46,28 +47,19 @@ app.get("/quote-demo", async (req, res) => {
     const chain = await getMarkupChain(C_ID);  // e.g. [0.10, 0.03]
     const final = applyMarkups(baseRate, chain);
 
-    // TEMP: just return JSON so we can debug
-    res.json({
-      success: true,
+    res.render("quote-demo", {
+      title: "Quote Demo",
       baseRate,
       markups: chain,
-      finalRate: final,
+      finalRate: final.toFixed(2)
     });
   } catch (err) {
     console.error("Quote demo error:", err);
-    res.status(500).json({
-      success: false,
-      error: "Quote demo error",
-      message: err.message,
-      code: err.code,
-      detail: err.detail,
-      stack: err.stack,
-    });
+    res.status(500).send("Error computing quote");
   }
 });
 
-
-// Home page (simple placeholder)
+// Home page
 app.get("/", (req, res) => {
   res.render("home", { title: "Shipping Platform" });
 });
