@@ -46,21 +46,26 @@ app.get("/quote-demo", async (req, res) => {
     const chain = await getMarkupChain(C_ID);  // e.g. [0.10, 0.03]
     const final = applyMarkups(baseRate, chain);
 
-    res.render("quote-demo", {
+    // TEMP: just return JSON so we can debug
+    res.json({
+      success: true,
       baseRate,
       markups: chain,
-      finalRate: final.toFixed(2)
+      finalRate: final,
     });
   } catch (err) {
     console.error("Quote demo error:", err);
     res.status(500).json({
+      success: false,
       error: "Quote demo error",
       message: err.message,
       code: err.code,
-      detail: err.detail
+      detail: err.detail,
+      stack: err.stack,
     });
   }
 });
+
 
 // Home page (simple placeholder)
 app.get("/", (req, res) => {
